@@ -20,3 +20,18 @@
         (map recurfuel
              (map #(Integer/parseInt %)
                   (clojure.string/split (slurp "day1_input.txt") #"\s+"))))
+
+; DAY 2 PART 1
+(defn getinput [input]
+  (map #(Integer/parseInt %) (clojure.string/split (slurp input) #",")))
+
+(defn computer [intcode]
+  (doseq [n intcode]
+  (case n
+    2 "2"
+    3 "3"
+    99 (println intcode)
+    ""
+    )))
+
+(computer (getinput "day2_input.txt"))
