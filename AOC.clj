@@ -25,13 +25,11 @@
 (defn getinput [input]
   (map #(Integer/parseInt %) (clojure.string/split (slurp input) #",")))
 
-(defn computer [intcode]
-  (doseq [n intcode]
-  (case n
-    2 "2"
-    3 "3"
-    99 (println intcode)
-    ""
-    )))
+(defn computer [intcode] 
+(for [ l (partition 4 intcode)]
+  (cond
+        (= (nth l 0) 1) "1"
+        :else ""
+        )))
 
 (computer (getinput "day2_input.txt"))
