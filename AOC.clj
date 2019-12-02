@@ -23,13 +23,24 @@
 
 ; DAY 2 PART 1
 (defn getinput [input]
-  (map #(Integer/parseInt %) (clojure.string/split (slurp input) #",")))
+  (mapv #(Integer/parseInt %) (clojure.string/split (slurp input) #",")))
+
+(defn manipulator [shortcode intcode operator]
+  (assoc intcode
+          (nth shortcode 3)
+          (operator
+            (nth intcode (nth shortcode 2))
+            (nth intcode (nth shortcode 1)))
+          ))
 
 (defn computer [intcode] 
-(for [ l (partition 4 intcode)]
+(for [shortcode (partition 4 intcode)]
   (cond
-        (= (nth l 0) 1) "1"
-        :else ""
-        )))
+    (= (nth shortcode 0) 1) (let [intcode (manipulator shortcode intcode +)]) ;nope
+    (= (nth shortcode 0) 2) (manipulator shortcode intcode *)
+    (= (nth shortcode 0) 99) (nth intcode 0)
+    :else ""
+    )))
 
-(computer (getinput "day2_input.txt"))
+(def input (getinput "day2_input.txt"))
+(computer input)
