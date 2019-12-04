@@ -25,26 +25,22 @@
 (defn getinput [input]
   (mapv #(Integer/parseInt %) (clojure.string/split (slurp input) #",")))
 
-(defn computer [intcode] 
-(doseq [code intcode]
-  (if (= (mod (.indexOf intcode code) 4) 0) (println code) "other code")
-  ))
+(def opcode
+  {1 +
+   2 *})
+
+; Used solution by elatedpixel from here https://github.com/elatedpixel/advent-of-code/blob/master/src/advent_2019/day2.clj
+(defn computer
+  ([program] (reduce computer program (range)))
+  ([program i]
+   (let [[op a b r] (nth (partition-all 4 4 program) i)]
+     (if (= 99 op)
+       (reduced program)
+       (assoc program r ((opcode op) (program a) (program b)))))))
+
+(defn p1 [input]
+  (assoc input 1 12  2 2))
 
 (def input (getinput "day2_input.txt"))
-(computer input)
 
-(defn execute-instructions [start]
-  (loop [i 0 state start]
-    (let [[k x y opcode] (map #(state (+ i %)) [3 2 1 0])]
-      (case opcode
-        99 state
-        1 (recur (+ i 4) (assoc state k (+ (state x) (state y))))
-        2 (recur (+ i 4) (assoc state k (* (state x) (state y))))))))
-
-(defn part-1 [start] ((execute-instructions start) 0))
-
-(defn part-2 [start]
-  (doseq [x (range 0 100) y (range 0 100)]
-    (let [result (execute-instructions (assoc (assoc start 1 x) 2 y))]
-      (if (= (result 0) 19690720)
-        (println (+ y (* 100 x)))))))
+(computer (p1 input))

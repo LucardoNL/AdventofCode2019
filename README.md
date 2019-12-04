@@ -8,4 +8,4 @@ https://adventofcode.com/
 Done
 
 ## D2
-Stuck. Maybe use https://github.com/elatedpixel/advent-of-code/blob/master/src/advent_2019/day2.clj 
+P1 Done
