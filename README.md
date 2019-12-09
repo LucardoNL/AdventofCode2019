@@ -8,4 +8,9 @@ https://adventofcode.com/
 Done
 
 ## D2
-P1 Done
+Done
+
+## D3
+Not started
+
+.. And ran out of free time to keep up with AoC. Shame.
